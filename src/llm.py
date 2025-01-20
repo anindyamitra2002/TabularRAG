@@ -1,39 +1,25 @@
 from typing import List, Dict, Optional
-from ollama import pull, chat
-from tqdm import tqdm
+from langchain_ollama import ChatOllama
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.prompts import ChatPromptTemplate
 
 class LLMChat:
-    def __init__(self, model_name: str = "llama3.2"):
+    def __init__(self, model_name: str = "llama3.2", temperature: float = 0):
+        """
+        Initialize LLMChat with LangChain ChatOllama
+        
+        Args:
+            model_name (str): Name of the model to use
+            temperature (float): Temperature parameter for response generation
+        """
         self.model_name = model_name
+        self.llm = ChatOllama(
+            model=model_name,
+            temperature=temperature
+        )
         self.history: List[Dict[str, str]] = []
-        # self._download_model()
-    
-    def _download_model(self):
-        """Download the model if not already present"""
-        current_digest, bars = '', {}
-        for progress in pull(self.model_name, stream=True):
-            digest = progress.get('digest', '')
-            if digest != current_digest and current_digest in bars:
-                bars[current_digest].close()
 
-            if not digest:
-                print(progress.get('status'))
-                continue
-
-            if digest not in bars and (total := progress.get('total')):
-                bars[digest] = tqdm(
-                    total=total, 
-                    desc=f'pulling {digest[7:19]}', 
-                    unit='B', 
-                    unit_scale=True
-                )
-
-            if completed := progress.get('completed'):
-                bars[digest].update(completed - bars[digest].n)
-
-            current_digest = digest
-
-    def chat_once(self, message: str) -> str:
+    def chat_once(self, message: str):
         """
         Single chat interaction without maintaining history
         
@@ -44,14 +30,21 @@ class LLMChat:
             str: Model's response
         """
         try:
-            messages = [{'role': 'user', 'content': message}]
-            response = chat(self.model_name, messages=messages)
-            return response['message']['content']
+            # Create a simple prompt template for single messages
+            prompt = ChatPromptTemplate.from_messages([
+                ("human", "{input}")
+            ])
+            
+            # Create and invoke the chain
+            chain = prompt | self.llm
+            response = chain.invoke({"input": message})
+            
+            return response.content
         except Exception as e:
             print(f"Error in chat: {e}")
             return ""
 
-    def chat_with_history(self, message: str) -> str:
+    def chat_with_history(self, message: str):
         """
         Chat interaction maintaining conversation history
         
@@ -63,11 +56,18 @@ class LLMChat:
         """
         try:
             # Add user message to history
-            self.history.append({'role': 'user', 'content': message})
+            self.history.append({'role': 'human', 'content': message})
             
-            # Get response
-            response = chat(self.model_name, messages=self.history)
-            assistant_message = response['message']['content']
+            # Convert history to LangChain message format
+            messages = [
+                HumanMessage(content=msg['content']) if msg['role'] == 'human'
+                else AIMessage(content=msg['content'])
+                for msg in self.history
+            ]
+            
+            # Get response using chat method
+            response = self.llm.invoke(messages)
+            assistant_message = response.content
             
             # Add assistant response to history
             self.history.append({'role': 'assistant', 'content': assistant_message})
@@ -77,6 +77,34 @@ class LLMChat:
             print(f"Error in chat with history: {e}")
             return ""
 
+    def chat_with_template(self, template_messages: List[Dict[str, str]], 
+                         input_variables: Dict[str, str]):
+        """
+        Chat using a custom template
+        
+        Args:
+            template_messages (List[Dict[str, str]]): List of template messages
+            input_variables (Dict[str, str]): Variables to fill in the template
+            
+        Returns:
+            str: Model's response
+        """
+        try:
+            # Create prompt template from messages
+            prompt = ChatPromptTemplate.from_messages([
+                (msg['role'], msg['content'])
+                for msg in template_messages
+            ])
+            
+            # Create and invoke the chain
+            chain = prompt | self.llm
+            response = chain.invoke(input_variables)
+            
+            return response.content
+        except Exception as e:
+            print(f"Error in template chat: {e}")
+            return ""
+
     def clear_history(self):
         """Clear the conversation history"""
         self.history = []
@@ -84,3 +112,32 @@ class LLMChat:
     def get_history(self) -> List[Dict[str, str]]:
         """Return the current conversation history"""
         return self.history
+    
+if __name__ == "__main__":
+    # Initialize the chat
+    chat = LLMChat(model_name="llama3.1", temperature=0)
+
+    # Example of using a template for translation
+    template_messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant that translates {input_language} to {output_language}."
+        },
+        {
+            "role": "human",
+            "content": "{input}"
+        }
+    ]
+
+    input_vars = {
+        "input_language": "English",
+        "output_language": "German",
+        "input": "I love programming."
+    }
+
+    response = chat.chat_with_template(template_messages, input_vars)
+    # Simple chat without history
+    response = chat.chat_once("Hello!")
+
+    # Chat with history
+    response = chat.chat_with_history("How are you?")

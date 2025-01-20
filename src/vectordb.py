@@ -84,7 +84,7 @@ def process_documents(
     table_results = processor(table_chunks)
     for table in table_results:
         # Convert table chunk to string representation if needed
-        table_str = str(table["text"]) if isinstance(table["text"], object) else table["text"]
+        table_str = str(table["text"].text)
         
         processed_chunks.append(
             ProcessedChunk(
@@ -251,18 +251,18 @@ def main():
     
     try:
         # Process documents
-        # processed_chunks = process_documents(
-        #     file_paths=['/teamspace/studios/this_studio/TabularRAG/data/FeesPaymentReceipt_7thsem.pdf'],
-        #     chunker=chunker,
-        #     processor=processor
-        # )
+        processed_chunks = process_documents(
+            file_paths=['/teamspace/studios/this_studio/TabularRAG/data/FeesPaymentReceipt_7thsem.pdf'],
+            chunker=chunker,
+            processor=processor
+        )
         
-        # # Ingest data
-        # ingest_data(
-        #     processed_chunks=processed_chunks,
-        #     embedding_model=embedder,
-        #     pinecone_client=pc
-        # )
+        # Ingest data
+        ingest_data(
+            processed_chunks=processed_chunks,
+            embedding_model=embedder,
+            pinecone_client=pc
+        )
         
         # Test retrieval
         retriever = PineconeRetriever(
