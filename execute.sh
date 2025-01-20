@@ -6,4 +6,4 @@ pip install -r requirements.txt
 curl -fsSL https://ollama.com/install.sh | sh
 sleep 1
 ollama pull nomic-embed-text
-ollama pull qwen2.5:7b
+ollama pull mistral:7b

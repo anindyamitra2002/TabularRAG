@@ -135,7 +135,7 @@ def initialize_components(pinecone_api_key: str):
         
         # Initialize LangChain LLM with custom parameters
         llm = LLMChat(
-            model_name="qwen2.5:7b",
+            model_name="llama3.2:3b",
             temperature=0.3  # Lower temperature for more focused responses
         )
         st.session_state.llm = llm
@@ -190,7 +190,7 @@ def process_all_documents(uploaded_files, chunker, processor, pc, embedder):
                 file_paths=file_paths,
                 chunker=chunker,
                 processor=processor,
-                output_path='./TabularRAG/data/output.md'
+                output_path='./output.md'
             )
             
             # Ingest data

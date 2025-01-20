@@ -42,7 +42,7 @@ def process_documents(
     file_paths: List[str],
     chunker: TableRecursiveChunker,
     processor: TableProcessor,
-    output_path: str = './data/output.md'
+    output_path: str = './output.md'
 ) -> List[ProcessedChunk]:
     """
     Process documents into text and table chunks

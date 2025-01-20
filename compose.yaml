@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  table-rag:
+    build: .
+    ports:
+      - "8501:8501"  # Streamlit port
+      - "11434:11434"  # Ollama port
+    volumes:
+      - ollama-models:/root/.ollama  # Persist Ollama models
+    environment:
+      - PYTHONPATH=/app
+      - OLLAMA_CPU=1  # Force CPU-only mode
+      - CUDA_VISIBLE_DEVICES=""  # Disable CUDA
+    deploy:
+      resources:
+        limits:
+          cpus: '4'  # Limit CPU usage (adjust as needed)
+          memory: 8G  # Limit memory usage (adjust as needed)
+
+volumes:
+  ollama-models:
