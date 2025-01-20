@@ -1,0 +1,45 @@
+# Build stage for Ollama
+FROM ollama/ollama as ollama
+
+# Final stage
+FROM python:3.9-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy Ollama binary from build stage
+COPY --from=ollama /usr/bin/ollama /usr/bin/ollama
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files
+COPY requirements.txt .
+COPY src/ ./src/
+COPY *.py ./
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Download Ollama models
+RUN ollama serve & \
+    sleep 5 && \
+    ollama pull nomic-embed-text && \
+    ollama pull qwen2.5:7b && \
+    pkill ollama
+
+# Set Python path
+ENV PYTHONPATH=/app
+
+# Expose ports for Streamlit and Ollama
+EXPOSE 8501 11434
+
+# Create startup script
+RUN echo '#!/bin/bash\nollama serve & \nsleep 5 && streamlit run --server.port 8501 app.py' > /app/start.sh && \
+    chmod +x /app/start.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/app/start.sh"]
