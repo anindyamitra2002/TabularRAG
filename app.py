@@ -90,14 +90,14 @@ def simulate_streaming_response(text: str, delay: float = 0.02) -> str:
 def clear_pinecone_index(pc, index_name="vector-index"):
     """Clear the Pinecone index and reset app state."""
     try:
-        pc.delete_index(index_name)
-        st.session_state.documents_processed = False
-        st.session_state.retriever = None
-        st.session_state.messages = []
-        st.session_state.llm = None
-        st.session_state.uploaded_files = []
+        if pc.has_index(index_name):
+            pc.delete_index(index_name)
+            st.session_state.documents_processed = False
+            st.session_state.retriever = None
+            st.session_state.messages = []
+            st.session_state.llm = None
+            st.session_state.uploaded_files = []
         st.success("🧹 Database cleared successfully!")
-        st.rerun()
     except Exception as e:
         st.error(f"❌ Error clearing database: {str(e)}")
 
@@ -235,7 +235,7 @@ def process_all_documents(uploaded_files, chunker, processor, pc, embedder):
 def main():
     st.title("📚 Table RAG Assistant")
     st.markdown("---")
-    
+    pc = None
     # Sidebar Configuration with improved styling
     with st.sidebar:
         st.title("⚙️ Configuration")
@@ -269,6 +269,7 @@ def main():
     # Initialize components if not already done
     if st.session_state.retriever is None:
         pc, llm, embedder, chunker, processor = initialize_components(pinecone_api_key)
+        clear_pinecone_index(pc)
         if None in (pc, llm, embedder, chunker, processor):
             st.stop()
     

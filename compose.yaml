@@ -2,7 +2,7 @@ services:
   streamlit-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.cpu
     ports:
       - "8501:8501"  # Streamlit port
     volumes:
