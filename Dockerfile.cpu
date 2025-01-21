@@ -1,17 +1,12 @@
-# Build stage for Ollama
-FROM ollama/ollama as ollama
-
-# Final stage
+# Dockerfile
 FROM python:3.9-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     procps \
+    git \
     && rm -rf /var/lib/apt/lists/*
-
-# Copy Ollama binary from build stage
-COPY --from=ollama /usr/bin/ollama /usr/bin/ollama
 
 # Set working directory
 WORKDIR /app
@@ -24,26 +19,17 @@ COPY *.py ./
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Set environment variables for CPU-only operation
-ENV CUDA_VISIBLE_DEVICES=""
-ENV OLLAMA_HOST="0.0.0.0"
-
-# Download Ollama models with CPU-only flag
-RUN ollama serve & \
-    sleep 5 && \
-    OLLAMA_CPU=1 ollama pull nomic-embed-text && \
-    OLLAMA_CPU=1 ollama pull llama3.2:3b && \
-    pkill ollama
-
 # Set Python path
 ENV PYTHONPATH=/app
 
-# Expose ports for Streamlit and Ollama
+# Expose Streamlit port
 EXPOSE 8501 11434
 
-# Create startup script with CPU-only configuration
-RUN echo '#!/bin/bash\nOLLAMA_CPU=1 ollama serve & \nsleep 5 && streamlit run --server.port 8501 app.py' > /app/start.sh && \
-    chmod +x /app/start.sh
+# Create startup script in a different location
+RUN echo '#!/bin/bash\n\
+# Start Streamlit\n\
+exec streamlit run --server.address 0.0.0.0 --server.port 8501 app.py\n\
+' > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
 
 # Set the entrypoint
-ENTRYPOINT ["/app/start.sh"]
+ENTRYPOINT ["/usr/local/bin/start.sh"]

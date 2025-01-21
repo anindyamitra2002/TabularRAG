@@ -135,7 +135,7 @@ def initialize_components(pinecone_api_key: str):
         
         # Initialize LangChain LLM with custom parameters
         llm = LLMChat(
-            model_name="llama3.2:3b",
+            model_name="mistral:7b",
             temperature=0.3  # Lower temperature for more focused responses
         )
         st.session_state.llm = llm

@@ -28,7 +28,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN ollama serve & \
     sleep 5 && \
     ollama pull nomic-embed-text && \
-    ollama pull qwen2.5:7b && \
+    ollama pull mistral:7b && \
     pkill ollama
 
 # Set Python path

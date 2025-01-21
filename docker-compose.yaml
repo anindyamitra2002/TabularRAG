@@ -1,24 +1,38 @@
-version: '3.8'
-
 services:
-  table-rag:
+  streamlit-app:
     build:
       context: .
       dockerfile: Dockerfile.cpu
     ports:
       - "8501:8501"  # Streamlit port
-      - "11434:11434"  # Ollama port
     volumes:
-      - ollama-models:/root/.ollama  # Persist Ollama models
+      - ./src:/app/src  # Mount only the src directory
+      - ./app.py:/app/app.py  # Mount the main app file
+      - python-deps:/root/.cache/pip  # Cache pip dependencies
     environment:
       - PYTHONPATH=/app
+      - OLLAMA_HOST=ollama  # Point to Ollama service
+    depends_on:
+      - ollama
+    networks:
+      - rag-network
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-models:/root/.ollama  # Persist Ollama models
+    ports:
+      - "11434:11434"  # Ollama API port
+    environment:
       - OLLAMA_CPU=1  # Force CPU-only mode
       - CUDA_VISIBLE_DEVICES=""  # Disable CUDA
-    deploy:
-      resources:
-        limits:
-          cpus: '4'  # Limit CPU usage (adjust as needed)
-          memory: 12G  # Limit memory usage (adjust as needed)
+    networks:
+      - rag-network
+
+networks:
+  rag-network:
+    driver: bridge
 
 volumes:
   ollama-models:
+  python-deps:

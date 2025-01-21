@@ -91,7 +91,7 @@ This system supports both CPU and GPU configurations with Docker.
 #### **CPU Configuration**
 1. Build and run the container:
    ```bash
-   docker compose -f docker-compose.yml up --build
+   docker compose -f docker-compose.yaml up --build
    ```
 
 2. Access the application at `http://localhost:8501`.
@@ -99,7 +99,7 @@ This system supports both CPU and GPU configurations with Docker.
 #### **GPU Configuration**
 1. Build and run the container:
    ```bash
-   docker compose -f docker-compose-gpu.yml up --build
+   docker compose -f docker-compose-gpu.yaml up --build
    ```
 
 2. Access the application at `http://localhost:8501`.

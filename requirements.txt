@@ -1,17 +1,11 @@
 langchain-community 
 tiktoken 
-langchain-openai 
 langchainhub
 langchain 
-langgraph  
-duckduckgo-search
-langchain-groq
 langchain-huggingface
 sentence_transformers
-tavily-python
 langchain-ollama
 ollama
-crawl4ai
 docling
 easyocr
 FlagEmbedding
