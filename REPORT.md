@@ -1,20 +1,4 @@
-Here's a specialized template optimized for **table retrieval visualization** and **answer comparison**, using GitHub-Flavored  with collapsible sections and structured layouts:
 
-
-# RAG Table Retrieval Evaluation
-
-📊 Focused evaluation of tabular data retrieval and answer generation performance
-
----
-
-## 🏆 Top-Level Summary
-| Metric                 | Table 1 | Table 2 | Table 3 |
-|------------------------|----------|----------|----------|
-| **Table Recall**       | 92% ✅   | 85% ⚠️   | 88% ⚠️   |
-| **Answer Accuracy**    | 89% ✅   | 82% ⚠️   | 85% ⚠️   |
-| **Schema Match Rate**  | 100% ✅  | 92% ⚠️   | 95% ⚠️   |
-
----
 
 ## 🔍 Query Examples
 
