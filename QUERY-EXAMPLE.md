@@ -1,5 +1,4 @@
 
-
 ## 🔍 Query Examples
 
 <details>
