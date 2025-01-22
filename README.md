@@ -119,18 +119,23 @@ This system supports only CPU.
 
 ## Directory Structure 📂
 ```
-└── TabularRAG/
+Directory structure:
+└── tabularrag/
     ├── README.md
+    ├── Dockerfile
     ├── Dockerfile.cpu
-    ├── compose.yml
+    ├── QUERY-EXAMPLE.md
     ├── app.py
+    ├── cleanup_docker.sh
     ├── compose.yaml
     ├── execute.sh
+    ├── output.md
     ├── requirements.txt
     ├── test.py
+    ├── assets/
     ├── data/
-    │   ├── helper.md
-    │   └── output.md
+    ├── notebooks/
+    │   └── tabular_rag.ipynb
     └── src/
         ├── embedding.py
         ├── llm.py
@@ -138,6 +143,7 @@ This system supports only CPU.
         ├── processor.py
         ├── table_aware_chunker.py
         └── vectordb.py
+
 ```
 ---
 
