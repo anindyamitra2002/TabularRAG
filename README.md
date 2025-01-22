@@ -26,7 +26,7 @@ While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, th
     - Enabling **precision retrieval** through hybrid embeddings that capture both textual and structural semantics  
 
 <div align="center">
-  <video src="myvideo.mp4" width="400" />
+  <video src="./assets/Table_aware_RAG_Demo.mp4" width="400" />
 </div>
 
 ---

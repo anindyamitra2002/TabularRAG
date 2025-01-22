@@ -381,9 +381,8 @@ This figure includes all operational costs such as employee benefits, technical 
 
 ---
 
-
 <details>
-<summary><strong>📑 Query 6: "Show the operating margin for the past 6 months."</strong></summary>
+<summary><strong>📑 Query 5: "Show the operating margin for the past 6 months."</strong></summary>
 
 ### Retrieved Tables
 

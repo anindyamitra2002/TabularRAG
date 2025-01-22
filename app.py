@@ -281,7 +281,7 @@ def main():
         uploaded_files = st.file_uploader(
             "Drop your files here",
             accept_multiple_files=True,
-            type=["pdf", "docx", "txt", "csv", "xlsx"]
+            type=["pdf", "docx", "md", "pptx"]
         )
         
         if uploaded_files:
