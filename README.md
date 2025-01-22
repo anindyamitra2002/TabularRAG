@@ -49,7 +49,7 @@ While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, th
 ---
 
 ## **System Workflow** 🔄
-![System Architecture](./assets/Table aware RAG.png)
+![System Architecture](./assets/Table_aware_RAG.png)
 ### **Workflow**
 1. **Document Loading**:
    - Documents are loaded using `MultiFormatDocumentLoader`, which supports OCR and table extraction.
