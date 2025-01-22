@@ -15,7 +15,7 @@
 
 ---
 
-## **Overview** 🚀
+## Overview 🚀
 While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, they often stumble when processing structured tabular data—struggling with retrieval inconsistencies (e.g., confusing similar tables in earnings reports) and generation inaccuracies (e.g., misreading nested columns or numerical values). Traditional approaches face two critical gaps:
 1. **Structural Amnesia**: Native RAG often mangles table layouts—merging columns, misaligning headers, or losing nested hierarchies—rendering the data semantically broken.  
 2. **Context Blindness**: Without table-specific processing, retrieval systems struggle to distinguish between similar tables (e.g., quarterly sales vs. annual summaries) or grasp cross-cell relationships.  
@@ -24,12 +24,14 @@ While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, th
     - Preserving **structural integrity** of tables during chunking/embedding  
     - Anchoring tables with **schema-aware context** (headers, data types, relationships)  
     - Enabling **precision retrieval** through hybrid embeddings that capture both textual and structural semantics  
-    
-[![System Demo](./assets/thumbnail.jpg)](https://youtu.be/VIDEO_ID)
+
+<div align="center">
+  <video src="myvideo.mp4" width="400" />
+</div>
 
 ---
 
-## **Key Features** ✨
+## Key Features ✨
 
 ### **1. Intelligent Document Parsing**
    - 📄 **Multi-Format Support** via [Doclings](https://ds4sd.github.io/docling/)  
@@ -48,7 +50,7 @@ While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, th
 
 ---
 
-## **System Workflow** 🔄
+## System Workflow 🔄
 ![System Architecture](./assets/Table_aware_RAG.png)
 ### **Workflow**
 1. **Document Loading**:
@@ -73,7 +75,7 @@ While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, th
 
 ---
 
-## **Usage** 🛠️
+## Usage 🛠️
 
 > **Prerequisites**  
 > - Python 3.10+  
@@ -117,7 +119,7 @@ This system supports only CPU.
 
 ---
 
-## **Directory Structure**📂
+## Directory Structure 📂
 ```
 └── TabularRAG/
     ├── README.md
@@ -141,10 +143,10 @@ This system supports only CPU.
 ```
 ---
 
-## **Query Example** 🎯
+## Query Example 🎯
 See the query example along with retrieved tables and generated answers in [QUERY-EXAMPLE.md](./QUERY-EXAMPLE.md)
 
-## **Script Briefing**📜
+## Script Briefing 📜
 ### **1. `src/loader.py`**
 The `loader.py` script handles document loading for multiple formats, including plain text, Markdown, and PDF. It supports OCR for PDFs and ensures robust error handling to extract both plain text and tables from documents seamlessly.
 
@@ -168,7 +170,7 @@ The `llm.py` script defines interaction with the large language model (LLM) for 
 
 ---
 
-## **Key Learnings** 💡
+## Key Learnings 💡
 
 This examples demonstrates robust performance in table retrieval accuracy, with retrieved tables achieving **92% structural fidelity** and **88% numerical consistency** relative to source documents. However, two critical improvement areas emerged from our analysis:
 
@@ -202,7 +204,7 @@ Approximately 18% of retrieved tables displayed formatting variances compared to
 This analysis confirms our system's strong retrieval foundation while identifying clear optimization pathways through modern LLM capabilities and enhanced preprocessing. Future iterations will prioritize bridging the semantic gap between high-quality data retrieval and analytical output generation through strategic model upgrades and pipeline refinements.
 
 
-## **Conclusion** 🏆 
+## Conclusion 🏆 
 Table-aware RAG outperforms native approaches by respecting the **dual nature** of documents—text *and* structure. Where standard RAG systems flatten tables into ambiguous text blocks, this solution:  
 
 1. **Maintains Structural Relationships**  
@@ -218,4 +220,3 @@ Table-aware RAG outperforms native approaches by respecting the **dual nature** 
    Excels with nested tables, multi-page spans, and domain-specific formats (financial statements, research datasets) that break conventional RAG.  
 
 By treating tables as **first-class data citizens**—not text appendages—this approach unlocks accurate analysis of structured data at scale, bridging a critical gap in modern document
-
