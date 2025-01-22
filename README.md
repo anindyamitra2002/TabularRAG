@@ -26,8 +26,6 @@ While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, th
     - Enabling **precision retrieval** through hybrid embeddings that capture both textual and structural semantics  
 
 
-https://github.com/user-attachments/assets/fc0942a2-26f7-4890-9ab4-deddc720d3ae
-
 ---
 
 ## Key Features ✨
