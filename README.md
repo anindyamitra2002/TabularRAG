@@ -25,7 +25,8 @@ While Retrieval-Augmented Generation (RAG) systems excel at text-based tasks, th
     - Anchoring tables with **schema-aware context** (headers, data types, relationships)  
     - Enabling **precision retrieval** through hybrid embeddings that capture both textual and structural semantics  
 
-![Demo Video](./assets/Table_aware_RAG_Demo.mp4)
+
+https://github.com/user-attachments/assets/fc0942a2-26f7-4890-9ab4-deddc720d3ae
 
 ---
 
