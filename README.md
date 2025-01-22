@@ -76,6 +76,7 @@ https://github.com/user-attachments/assets/fc0942a2-26f7-4890-9ab4-deddc720d3ae
 ## Usage 🛠️
 
 > **Prerequisites**  
+> - OS: Ubuntu 20.04 (Recommended)
 > - Python 3.10+  
 > - Pinecone API Key ([Get Free Tier](https://www.pinecone.io/))  
 > - Docker Engine 24.0+
@@ -106,9 +107,22 @@ https://github.com/user-attachments/assets/fc0942a2-26f7-4890-9ab4-deddc720d3ae
 
 ### **Running with Docker**
 This system supports only CPU.
+#### Build and Run the Docker Image
 
-#### **CPU Configuration**
-1. Build and run the container:
+1. **Build the Docker Image**:
+   ```sh
+   docker build -t my-streamlit-app .
+   ```
+
+2. **Run the Docker Container**:
+   ```sh
+   docker run -d -p 8501:8501 -p 11434:11434 --name my-streamlit-container my-streamlit-app
+   ```
+
+`or`
+
+#### Build and run the container
+1. Run using Docker Compose:
    ```bash
    docker compose -f compose.yaml up --build
    ```
