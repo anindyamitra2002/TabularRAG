@@ -2,14 +2,14 @@
 
 <div align="center">
 
-  <a href="#overview-🚀">Overview</a> •
-  <a href="#key-features-✨">Features</a> •
-  <a href="#system-workflow-🔄">Workflow</a> •
-  <a href="#usage-🛠️">Usage</a> •
-  <a href="#directory-structure-📂">Directory Structure</a> •
-  <a href="#query-example-🎯">Query Example</a> •
-  <a href="#key-learnings-💡">Key Learnings</a> •
-  <a href="#conclusion-🏆">Conclusion</a>
+  <a href="#overview-">Overview</a> •
+  <a href="#key-features-">Features</a> •
+  <a href="#system-workflow-">Workflow</a> •
+  <a href="#usage-%EF%B8%8F">Usage</a> •
+  <a href="#directory-structure-">Directory Structure</a> •
+  <a href="#query-example-">Query Example</a> •
+  <a href="#key-learnings-">Key Learnings</a> •
+  <a href="#conclusion-">Conclusion</a>
 
 </div>
 
